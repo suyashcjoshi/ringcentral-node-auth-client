@@ -1,6 +1,6 @@
 # Node.JS Client App using RingCentral SDK
 
-Authentication Demo for RingCentral App using 3-legged OAuth. For more information please refer this guide: https://developers.ringcentral.com/guide/authentication
+Authentication Demo for RingCentral App using 3-legged OAuth. For more information please refer this guide: https://developers.ringcentral.com/guide/authentication. For 3-legged OAuth Flow with PKCE refer to this guide: https://developers.ringcentral.com/guide/authentication/auth-code-pkce-flow
 
 ![alt text](https://netstorage.ringcentral.com/dpw/guide/images/oauth-auth-token-flow.png?v=2022-03-04![image](https://user-images.githubusercontent.com/395039/160492497-d0058fa4-59d9-49ac-8f9e-4e8a4e1aa1b7.png))
 
