@@ -4,11 +4,10 @@ Authentication Demo for RingCentral App using 3-legged OAuth. For more informati
 
 ## Pre-Requisite
 
-- Create an application at RingCentral Developer Portal.
+- Have an existing an application on RingCentral Developer Portal. To create a new app, please refer to this guide: https://developer.ringcentral.com/library/getting-started.html
 - Select Server/Web for the Platform type.
-- Add the ReadAccounts, ReadCallLog permissions for the app.
-- Specify the redirect Uri as http://localhost:5000/oauth2callback
-- For step by step guide, please refer to : https://developer.ringcentral.com/library/getting-started.html
+- Make sure the application has the ReadAccounts, ReadCallLog permissions.
+- Make sure the redirect URL matches the one  in `.env` file, for this demo: http://localhost:5000/oauth2callback
 
 ## Clone & Configure project 
 
