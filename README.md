@@ -11,7 +11,7 @@ Authentication Demo for RingCentral App using 3-legged OAuth. For more informati
 - Make sure the application has the ReadAccounts, ReadCallLog permissions.
 - Make sure the redirect URL matches the one  in `.env` file, for this demo: http://localhost:5000/oauth2callback
 
-## Clone & Configure project 
+## Download & Configure project 
 
 - ```$ git clone <this project> ```
 - ```$ npm install```
