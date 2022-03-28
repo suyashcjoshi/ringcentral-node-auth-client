@@ -15,7 +15,7 @@ Authentication Demo for RingCentral App using 3-legged OAuth Flow with help of R
 
 - ```$ git clone <this project> ```
 - ```$ npm install```
-- Open .env file and update it with your sandbox application credentials for RC_CLIENT_ID, RC_CLIENT_SECRET & RC_REDIRECT_URL values.
+- Open the **.env** file and update it with your sandbox application credentials for RC_CLIENT_ID, RC_CLIENT_SECRET & RC_REDIRECT_URL values. **Make sure not to publicly expose your application credentials**
 
 
 ## Run the demo
