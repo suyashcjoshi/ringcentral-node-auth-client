@@ -1,41 +1,41 @@
-var app = require('express')();
-var session = require('express-session');
-const RC = require('@ringcentral/sdk').SDK
-var path = require('path')
-require('dotenv').config();
+const app = require("express")();
+const session = require("express-session");
+const RC = require("@ringcentral/sdk").SDK
+const path = require("path")
+require("dotenv").config();
 
-var usePKCE = false; // change to true for enabling authorization code with PKCE flow
+const usePKCE = false; // change to true for enabling authorization code with PKCE flow
 
-app.use(session({ secret: 'somesecretstring', tokens: '' }));
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+app.use(session({ secret: "session secret variable", tokens: "" }));
+app.set("views", path.join(__dirname, "views"))
+app.set("view engine", "ejs")
 
 REDIRECT_URL = process.env.RC_REDIRECT_URL;
 
-var rcsdk = new RC({
-    'server':       process.env.RC_SERVER_URL,
-    'clientId':     process.env.RC_CLIENT_ID,
-    'clientSecret': process.env.RC_CLIENT_SECRET,
-    'redirectUri':  REDIRECT_URL
+const rcsdk = new RC({
+    "server":       process.env.RC_SERVER_URL,
+    "clientId":     process.env.RC_CLIENT_ID,
+    "clientSecret": process.env.RC_CLIENT_SECRET,
+    "redirectUri":  REDIRECT_URL
 });
 
-var server = require('http').createServer(app);
+const server = require("http").createServer(app);
 server.listen(5000);
-console.log("listen to port 5000")
+console.log("Server running at http://localhost:5000");
 
-app.get('/index', function(req, res) {
+app.get("/index", function(req, res) {
   res.redirect("/")
 })
 
-app.get('/', async function(req, res) {
-  var platform = rcsdk.platform()
+app.get("/", async function(req, res) {
+  const platform = rcsdk.platform()
   if (req.session.tokens != undefined) {
-    platform.auth().setData(req.session.tokens)
+    platform.auth().setData(req.session.tokens);
     if (await platform.loggedIn()) {
-      return res.render('test')
+      return res.render("protected");
     }
   } else {
-    res.render('index', {
+    res.render("index", {
       authorize_uri: platform.loginUrl({
         redirectUri: REDIRECT_URL,
         usePKCE,
@@ -44,13 +44,13 @@ app.get('/', async function(req, res) {
   }
 })
 
-app.get('/logout', async function(req, res) {
+app.get("/logout", async function(req, res) {
   if (req.session.tokens != undefined) {
-    var platform = rcsdk.platform()
+    const platform = rcsdk.platform()
     platform.auth().setData(req.session.tokens)
     if (platform.loggedIn()) {
       try {
-        var resp = await platform.logout()
+        let resp = await platform.logout()
         console.log("logged out")
       } catch (e) {
         console.log(e)
@@ -61,41 +61,43 @@ app.get('/logout', async function(req, res) {
   res.redirect("/")
 });
 
-app.get('/oauth2callback', async function(req, res) {
+app.get("/oauth2callback", async function(req, res) {
   if (req.query.code) {
     try {
-      var platform = rcsdk.platform()
-      var resp = await platform.login({
+      const platform = rcsdk.platform()
+      let resp = await platform.login({
         code: req.query.code,
         redirectUri: REDIRECT_URL
       })
       req.session.tokens = await resp.json()
       console.log(req.session.tokens)
-      res.redirect("/test")
+      res.redirect("/protected")
     } catch (e) {
-      res.send('Login error ' + e);
+      res.send("Login error " + e);
     }
   } else {
-    res.send('No Auth code');
+    res.send("No Auth code was found!");
   }
 });
 
-app.get('/test', function(req, res) {
+app.get("/protected", function(req, res) {
   if (req.session.tokens != undefined) {
-    var platform = rcsdk.platform()
+    const platform = rcsdk.platform()
     platform.auth().setData(req.session.tokens)
     if (platform.loggedIn()) {
       if (req.query.api == "extension") {
-        var endpoint = "/restapi/v1.0/account/~/extension"
-        var params = {}
+        let endpoint = "/restapi/v1.0/account/~/extension"
+        let params = {}
         return callGetMethod(platform, endpoint, params, res)
-      } else if (req.query.api == "extension-call-log") {
-        var endpoint = "/restapi/v1.0/account/~/extension/~/call-log"
-        var params = {}
+      } 
+      else if (req.query.api == "extension-call-log") {
+        let endpoint = "/restapi/v1.0/account/~/extension/~/call-log"
+        let params = {}
         return callGetMethod(platform, endpoint, params, res)
-      } else if (req.query.api == "account-call-log") {
-        var endpoint = "/restapi/v1.0/account/~/call-log"
-        var params = {}
+      } 
+      else if (req.query.api == "account-call-log") {
+        let endpoint = "/restapi/v1.0/account/~/call-log"
+        let params = {}
         return callGetMethod(platform, endpoint, params, res)
       }
     }
@@ -105,10 +107,11 @@ app.get('/test', function(req, res) {
 
 async function callGetMethod(platform, endpoint, params, res) {
   try {
-    var resp = await platform.get(endpoint, params)
-    var jsonObj = await resp.json()
+    let resp = await platform.get(endpoint, params)
+    let jsonObj = await resp.json()
     res.send(JSON.stringify(jsonObj))
-  } catch (e) {
-    res.send("Error: " + e.message)
+  } 
+  catch (e) {
+    res.send("Error occurred: " + e.message)
   }
 }
