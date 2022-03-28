@@ -1,5 +1,6 @@
-# ringcentral-node-auth-client
-Authentication Demo for RingCentral App using 3-legged OAuth
+# Node.JS Client App using RingCentral SDK
+
+Authentication Demo for RingCentral App using 3-legged OAuth. For more information please refer this guide: https://developers.ringcentral.com/guide/authentication
 
 ## Pre-Requisite
 
