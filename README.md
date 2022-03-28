@@ -13,9 +13,9 @@ Authentication Demo for RingCentral App using 3-legged OAuth. For more informati
 
 ## Clone & Configure project 
 
+- ```$ git clone <this project> ```
 - ```$ npm install```
-- Open .env file and update it with your sandbox application credentials (RC_CLIENT_ID, RC_CLIENT_SECRET)
-- Set RC_REDIRECT_URL to 'http://localhost:5000/oauth2callback', make sure that is also the `OAuth Redirect URI` in your application settings
+- Open .env file and update it with your sandbox application credentials for RC_CLIENT_ID, RC_CLIENT_SECRET & RC_REDIRECT_URL values.
 
 
 ## Run the demo
